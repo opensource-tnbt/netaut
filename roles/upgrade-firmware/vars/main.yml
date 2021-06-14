@@ -1,0 +1,5 @@
+OS_version: "20.3R1.8"
+OS_package: "junos-install-mx-x86-64-20.3R1.8.tgz"
+pkg_dir: "software"
+netconf_port: 830
+wait_time: 3600

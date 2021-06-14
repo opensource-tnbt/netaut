@@ -1,0 +1,6 @@
+- name: wait_reboot
+  wait_for: 
+    host: "{{ inventory_hostname }}"
+    port: "{{ netconf_port }}"
+    timeout: "{{ wait_time }}"
+  when: not response.check_mode

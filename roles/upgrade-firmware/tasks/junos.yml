@@ -1,0 +1,19 @@
+- name: Upgrade Junos OS
+  juniper.device.software:
+    local_package: "{{ pkg_dir }}/{{ OS_package }}"
+      no_copy: false
+      validate: True
+      install_timeout: 2000
+      checksum_timeout: 420
+      cleanfs_timeout: 600
+      reboot: True
+      vmhost: False
+      issu: False
+      nssu: False
+    register: response
+    notify:
+    - wait_reboot
+
+- name: Print the response
+      debug:
+        var: response
