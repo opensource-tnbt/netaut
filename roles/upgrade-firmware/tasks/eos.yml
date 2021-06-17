@@ -1,1 +1,40 @@
-https://bitbucket.org/wandynamics/arista_eos_upgrade/src/master/
+#https://bitbucket.org/wandynamics/arista_eos_upgrade/src/master/
+---
+- name: Gather facts about device
+  eos_facts:
+
+- name: Creating fact to see if EOS needs to be upgraded to {{ target_version }} & that there is {{ mem_required }} MB of free space on flash.
+  set_fact:
+    perform_upgrade={{ upgrade_version != ansible_net_version and ansible_net_memfree_mb > mem_required }}
+
+- name: Install new SWI
+  eos_command:
+    commands:
+      - 'install source {{ ftp_url }}{{ upgrade_filename }} now'
+    timeout: 300
+  when: perform_upgrade 
+
+- name: Gather MD5 info
+  eos_command:
+    commands:
+      - 'verify /md5 flash:{{ upgrade_filename }}'
+  register: showMD5
+  when: perform_upgrade
+
+- name: Reload the Switch if EOS has been transferred and the MD5 sum is correct.
+  eos_command:
+    commands:
+      - 'reload now'
+  when: "perform_upgrade and eos_md5 in showMD5.stdout[0]"
+  ignore_errors: yes
+
+- pause: seconds= {{ reload_wait }}
+  when: perform_upgrade
+
+- name: Gather facts for verification if EOS has been transferred and MD5 sum matches.
+  eos_facts:
+
+- name: Assert the EOS version is {{ upgrade_version }}
+  assert:
+    that:
+      - target_version == ansible_net_version

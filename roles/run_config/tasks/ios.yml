@@ -1,0 +1,13 @@
+#https://www.youtube.com/watch?reload=9&v=WXLUgDmvHDI
+- name: update config
+  ios_config:
+    src: "templates/{{ config_file }}"
+  register: result
+  when: config_customization
+
+- name: update config
+  ios_config:
+    src: "files/{{ config_file }}"
+    backup: {{ config_backup }}
+  register: result
+  when: not config_customization

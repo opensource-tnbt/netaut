@@ -1,0 +1,14 @@
+---
+- name: configurable backup path
+  arista.eos.eos_config:
+    src: templates/{{ config_file }}
+    backup: yes
+    backup_options:
+      filename: backup.cfg
+  when: config_customization
+
+- name: load configuration from file
+  arista.eos.eos_config:
+    src: files/{{ config_file }}
+  when: not config_customization
+

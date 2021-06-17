@@ -1,0 +1,27 @@
+# https://www.juniper.net/documentation/en_US/junos-ansible/topics/topic-map/junos-ansible-configuration-loading-committing.html
+- name: "Load a configuration from a Jinja2 template and commit"
+  juniper.device.config:
+    load: "merge"
+    template: "templates/{{ config_file }}"
+    format: "text"
+  register: response
+  when: not config_customization
+
+- name: "Load configuration from a local file and commit"
+  juniper.device.config:
+    load: "merge"
+    src: "files/{{ config_file }}"
+  register: response
+  when: not config_customization
+
+- name: "Load configuration from a remote url and commit"
+  juniper.device.config:
+    load: "merge"
+    url: {{ config_url }}
+  register: response
+  when: config_download
+
+
+- name: "Print the response"
+  debug:
+    var: response

@@ -1,6 +1,6 @@
 - name: Upgrade Junos OS
   juniper.device.software:
-    local_package: "{{ pkg_dir }}/{{ OS_package }}"
+    local_package: "{{ upgrade_filepath }}/{{ upgrade_filename }}"
       no_copy: false
       validate: True
       install_timeout: 2000

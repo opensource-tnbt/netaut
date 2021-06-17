@@ -1,1 +1,37 @@
 # https://github.com/vipersnews/Ansible-IOS-Updater/blob/main/update_ios.yml
+
+---
+- name: CHECK IF {{ upgrade_filename }} IS ALREADY INSTALLED
+  cisco.ios.ios_command:
+    commands: "show flash: | inc bin"
+  register: showflash
+
+- name: Exit if {{ upgrade_filename }} found
+  when: "showflash is search()"
+  meta: end_play
+
+- name: UPGRADE IOS IMAGE IF NOT COMPLIANT
+  cisco.ios.ios_command:
+    commands:
+    - command: "copy {{ ftp_url }} flash:"
+      prompt: '[confirm]'
+      answer: ''
+  register: ftp
+  when: ftp_mode
+
+- name: VERIFY MD5
+  cisco.ios.ios_command:
+    commands: "verify /md5 {{  }}"
+  register: md5
+
+- name: SET BOOTVAR WHEN MD5 PASSES
+  cisco.ios.ios_command:
+    commands:
+    - command: "conf t"
+    - command: "{{ boot_flash_command }}"
+    - command: "ex"
+    - command: "wr"
+
+- debug: msg="Ready for reload"
+  when: "md5 is search(MD5)"
+- 

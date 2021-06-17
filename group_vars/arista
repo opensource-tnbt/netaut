@@ -1,0 +1,5 @@
+ftp_url: ftp://ftp_test:ftp_test@192.168.7.100/
+upgrade_version: 4.21.3F
+mem_required: 390
+md5: bb58c1507423e757245076e02cf95d09
+upgrade_file: vEOS-lab-4.21.3F.swi
