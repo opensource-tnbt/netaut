@@ -1,0 +1,18 @@
+# Additional Option for When condition
+#  ansible_network_os == * 
+---
+- name: Upgrade firmware of a Cisco switch.
+  include_tasks: ios.yml
+  when: "'cisco' in {{ group_names }}"
+
+- name: Upgrade firmware of a Juniper switch.
+  include_tasks: junos.yml
+  when: "'juniper' in {{ group_names }}"
+
+- name: Upgrade firmware of a Arista switch.
+  include_tasks: eos.yml
+  when: "'arista' in {{ group_names }}"
+
+- name: Upgrade firmware of a Aruba switch.
+  include_tasks: arubaos.yml
+  when: "'aruba' in {{ group_names }}"
