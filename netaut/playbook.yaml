@@ -1,0 +1,26 @@
+- name: Run Jobs on a switch
+  hosts: switches
+  gather_facts: true
+  roles:
+  - get_capabilities
+  - upgrade_firmware
+  - run_config
+
+- name: Run Jobs on a switch - Conditional
+  hosts: switches
+  gather_facts: true
+  tasks:
+    - name: Include get capabilities
+      include_role:
+        name: get_capabilities
+      when: "{{ operation }} = 'capabilities'"
+    - name: Include get capabilities
+      include_role:
+        name: upgrade_firmware
+      when: "{{ operation }} = 'firmware'"
+    - name: Include get capabilities
+      include_role:
+        name: run_config
+      when: "{{ operation }} = 'configuration'"
+
+

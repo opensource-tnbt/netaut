@@ -1,0 +1,15 @@
+1. Add host_vars folder and include host specific variables.
+2. 
+
+Useful Links:
+
+https://www.youtube.com/watch?v=IFBlgiJawag
+
+https://docs.ansible.com/ansible/latest/network/index.html
+
+https://docs.ansible.com/ansible/latest/network/getting_started/first_inventory.html
+
+https://docs.ansible.com/ansible/latest/network/user_guide/index.html
+
+
+https://docs.ansible.com/ansible/latest/network/getting_started/network_differences.html

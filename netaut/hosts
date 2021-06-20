@@ -6,19 +6,19 @@ ansible_connection=ansible.netcommon.network_cli
 ansible_user=ansible
 
 [switches:children]
-eos
-ios
-junos
-arubaos
+arista
+cisco
+juniper
+aruba
 
-[eos]
+[arista]
 veos01 ansible_host=veos-01.example.net
 veos02 ansible_host=veos-02.example.net
 veos03 ansible_host=veos-03.example.net
 veos04 ansible_host=veos-04.example.net
 
 # https://docs.ansible.com/ansible/latest/network/user_guide/platform_eos.html
-[eos:vars]
+[arista:vars]
 ansible_become=yes
 ansible_become_method=enable
 ansible_network_os=arista.eos.eos
@@ -26,12 +26,12 @@ ansible_user=my_eos_user
 ansible_password=my_eos_password
 
 # https://docs.ansible.com/ansible/latest/network/user_guide/platform_ios.html
-[ios]
+[cisco]
 ios01 ansible_host=ios-01.example.net
 ios02 ansible_host=ios-02.example.net
 ios03 ansible_host=ios-03.example.net
 
-[ios:vars]
+[cisco:vars]
 ansible_become=yes
 ansible_become_method=enable
 ansible_network_os=cisco.ios.ios
@@ -39,25 +39,25 @@ ansible_user=my_ios_user
 ansible_password=my_ios_password
 
 # https://docs.ansible.com/ansible/latest/network/user_guide/platform_junos.html
-[junos]
+[juniper]
 junos01 ansible_host=junos-01.example.net
 junos02 ansible_host=junos-02.example.net
 junos03 ansible_host=junos-03.example.net
 
-[junos:vars]
+[juniper:vars]
 ansible_network_os=junipernetworks.junos.junos
 ansible_user=my_junos_user
 ansible_password=my_junos_password
 
 # 
-[arubaos]
+[aruba]
 arubaos01 ansible_host=arubaos-01.example.net
 arubaos02 ansible_host=arubaos-02.example.net
 arubaos03 ansible_host=arubaos-03.example.net
 
 #https://github.com/aruba/aruba-ansible-modules
 
-[arubaos:vars]
+[aruba:vars]
 ansible_network_os=arubaoss
 ansible_user=my_arubaos_user
 ansible_password=my_arubaos_password

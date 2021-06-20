@@ -1,0 +1,12 @@
+---
+- name: validate required connection is configured
+  fail:
+    msg: "expected connection value to be set to network_cli, got {{ ansible_connection }}"
+  when: ansible_connection != 'network_cli'
+
+- name: Get ios facts
+  ios_facts:
+    gather_network_resources: all
+
+- name: collect platform capabilities as facts
+  ios_capabilities:
