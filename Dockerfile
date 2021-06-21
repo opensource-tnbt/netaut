@@ -32,5 +32,9 @@ WORKDIR /ansible
 COPY netaut netaut/
 WORKDIR /ansible/netaut
 
+RUN ansible-galaxy collection install cisco.ios
+RUN ansible-galaxy collection install junipernetworks.junos
+
+
 ENTRYPOINT ["/usr/bin/dumb-init","--","entrypoint.sh"]
 CMD ["/bin/sh"]
