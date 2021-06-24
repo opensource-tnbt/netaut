@@ -77,7 +77,7 @@ ansible
 Shell access as user `root`
 
 ```
-$ docker run -it --rm alpine-ansible-py3 makemeroot
+$ docker run -it --rm spirent/netaut:1.0 makemeroot
 /ansible/netaut # whoami
 root
 ```
