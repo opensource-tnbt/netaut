@@ -23,9 +23,11 @@ RUN set -euxo pipefail ;\
     mkdir -p /etc/ansible/ ;\
     /bin/echo -e "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts ;\
     ssh-keygen -q -t ed25519 -N '' -f /root/.ssh/id_ed25519 ;\
-    mkdir -p ~/.ssh && echo "Host *" > ~/.ssh/config && echo " StrictHostKeyChecking no" >> ~/.ssh/config ;\
+    mkdir -p ~/.ssh && echo "Host *" > ~/.ssh/config && echo " StrictHostKeyChecking no" >> ~/.ssh/config && echo " KexAlgorithms +diffie-hellman-group" >> ~/.ssh/config ;\
     chmod +x /usr/local/bin/entrypoint.sh ;\
-    adduser -s /bin/ash -u 1000 -D -h /ansible ansible
+    apk add iputils openssh
+    
+RUN adduser -s /bin/ash -u 1000 -D -h /ansible ansible
 
 
 WORKDIR /ansible
