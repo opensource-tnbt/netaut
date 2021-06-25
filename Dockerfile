@@ -28,7 +28,10 @@ RUN set -euxo pipefail ;\
     apk add iputils openssh
     
 RUN adduser -s /bin/ash -u 1000 -D -h /ansible ansible
-
+#RUN apk add sudo
+#RUN adduser -D ansible -h /ansible \
+#    && echo "ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible \
+#    && chmod 0440 /etc/sudoers.d/ansible 
 
 WORKDIR /ansible
 COPY netaut netaut/
@@ -36,7 +39,6 @@ WORKDIR /ansible/netaut
 
 RUN ansible-galaxy collection install cisco.ios
 RUN ansible-galaxy collection install junipernetworks.junos
-
 
 ENTRYPOINT ["/usr/bin/dumb-init","--","entrypoint.sh"]
 CMD ["/bin/sh"]

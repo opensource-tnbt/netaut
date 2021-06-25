@@ -14,6 +14,31 @@ $ make build
 
 The image will be tagged with the 1.0 , e.g. `spirent/netaut:1.0`
 
+### Modifying Dockerfile before build
+
+#### Add ansible user as sudoer.
+
+Install sudo, by adding this line
+
+RUN apk add sudo
+
+Next, odify the line
+```
+RUN adduser -s /bin/ash -u 1000 -D -h /ansible ansible
+```
+to
+```
+RUN adduser -D ansible -h /ansible \
+    && echo "ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible \
+    && chmod 0440 /etc/sudoers.d/ansible
+```
+
+Note: 
+
+1. To run the container as root user, please refer to *Shell Access* section.
+2. To make the default run as root user, modify the entrypoint.sh file - Replace line 15 with line 12. 
+
+
 ### Pull from Docker Hub
 
 Not yet published to Dockerhub
