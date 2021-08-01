@@ -51,4 +51,4 @@ VOLUME ["/sys/fs/cgroup"]
 
 
 ENTRYPOINT ["/usr/bin/dumb-init","--","entrypoint.sh"]
-CMD ["/bin/sh"]
+CMD ["sleep", "infinity"]
